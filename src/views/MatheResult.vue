@@ -1,15 +1,15 @@
 <template>
    <div class="d-flex justify-content-center flex-column">
-      <h3 class="text-center mb-4">Geschafft! Du hast {{ score }} von {{ total }} richtig gelöst!</h3>
+      <h3 class="text-center mb-4">Super! Du hast alle richtig gelöst!</h3>
       <img crossorigin="anonymous" class="w-50 m-auto mb-4" :src="randomCatGif" alt="More cats!">
       <div class="d-flex justify-content-center">
-         <button class="btn btn-primary" type="button" @click="newRound()">Noch eine Runde!</button>
+         <button class="btn btn-primary" type="button" @click="newRound">Noch eine Runde!</button>
       </div>
    </div>
 </template>
 <script lang="ts" setup>
    import { computed } from 'vue';
-   import { useRoute, useRouter } from 'vue-router';
+   import { useRouter } from 'vue-router';
    import catGif000 from '../../assets/000-jumping-cats.gif';
    import catGif001 from '../../assets/001-turntable-cats.gif';
    import catGif002 from '../../assets/002-mob-cats.gif';
@@ -22,10 +22,6 @@
    import catGif009 from '../../assets/009-quak-cats.gif';
    import catGif010 from '../../assets/010-surprise-cats.gif';
    import catGif011 from '../../assets/011-ninja-cats.gif';
-
-   const route = useRoute();
-   const score = route.params.score;
-   const total = route.params.total;
 
    const router = useRouter();
 
@@ -55,3 +51,16 @@
       router.push({ path: '/mathe/1x1' });
    }
 </script>
+<style lang="scss">
+   @import "bootstrap/scss/functions";
+   @import "bootstrap/scss/variables";
+   @import "bootstrap/scss/maps";
+   @import "bootstrap/scss/mixins";
+
+   img {
+      @include media-breakpoint-up(lg) {
+         max-height: 600px;
+      }
+      object-fit: contain;
+   }
+</style>

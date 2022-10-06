@@ -22,7 +22,7 @@ const router: Router = createRouter({
       name: 'Das kleine 1x1'
     },
     {
-      path: '/mathe/result/:score/:total',
+      path: '/mathe/result',
       name: 'Dein Ergebnis',
       component: MatheResult
     }

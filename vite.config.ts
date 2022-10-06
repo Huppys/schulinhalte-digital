@@ -5,10 +5,10 @@ import vue from '@vitejs/plugin-vue';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-   base: '/schule/',
+   base: '/',
    mode: 'production',
    appType: 'spa',
-   publicDir: 'dist/schule',
+   publicDir: 'dist',
    plugins: [
       vue()
    ],
