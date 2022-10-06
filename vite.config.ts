@@ -8,9 +8,12 @@ export default defineConfig({
    base: '/',
    mode: 'production',
    appType: 'spa',
-   publicDir: 'dist',
+   publicDir: 'public',
    plugins: [
       vue()
+   ],
+   assetsInclude: [
+      'assets/*'
    ],
    resolve: {
       alias: {

@@ -1,7 +1,8 @@
 <template>
    <div class="d-flex justify-content-center flex-column">
       <h3 class="text-center mb-4">Super! Du hast alle richtig gelöst!</h3>
-      <img crossorigin="anonymous" class="w-50 m-auto mb-4" :src="randomCatGif" alt="More cats!">
+      <img v-if="Math.random() > 0.9" crossorigin="anonymous" class="w-50 m-auto mb-4" :src="randomImage" alt="More cats!">
+      <video v-else :src="randomVideo" class="w-50 m-auto mb-4" loop autoplay></video>
       <div class="d-flex justify-content-center">
          <button class="btn btn-primary" type="button" @click="newRound">Noch eine Runde!</button>
       </div>
@@ -10,41 +11,51 @@
 <script lang="ts" setup>
    import { computed } from 'vue';
    import { useRouter } from 'vue-router';
-   import catGif000 from '../../assets/000-jumping-cats.gif';
-   import catGif001 from '../../assets/001-turntable-cats.gif';
-   import catGif002 from '../../assets/002-mob-cats.gif';
-   import catGif003 from '../../assets/003-relaxed-cats.gif';
-   import catGif004 from '../../assets/004-bro-cats.gif';
-   import catGif005 from '../../assets/005-looking-cats.gif';
-   import catGif006 from '../../assets/006-waving-cats.gif';
-   import catGif007 from '../../assets/007-tapping-cats.gif';
-   import catGif008 from '../../assets/008-intellectual-cats.gif';
-   import catGif009 from '../../assets/009-quak-cats.gif';
-   import catGif010 from '../../assets/010-surprise-cats.gif';
-   import catGif011 from '../../assets/011-ninja-cats.gif';
 
    const router = useRouter();
 
-   const randomCatGif = computed(() => {
+   const randomImage = computed(() => {
 
-      const catGifs = [
-         catGif000,
-         catGif001,
-         catGif002,
-         catGif003,
-         catGif004,
-         catGif005,
-         catGif006,
-         catGif007,
-         catGif008,
-         catGif009,
-         catGif010,
-         catGif011,
+      const images = [
+         '/assets/images/000-bleh-redpanda.jpg'
       ];
 
-      const selectIndex = Math.floor(Math.random() * catGifs.length);
+      const selectIndex = Math.floor(Math.random() * images.length);
 
-      return catGifs[selectIndex];
+      return images[selectIndex];
+   });
+
+   const randomVideo = computed(() => {
+
+      const videos = [
+         '/assets/videos/000-jumping-cats.mp4',
+         '/assets/videos/001-turntable-cats.mp4',
+         '/assets/videos/002-mob-cats.mp4',
+         '/assets/videos/003-relaxed-cats.mp4',
+         '/assets/videos/004-bro-cats.mp4',
+         '/assets/videos/005-looking-cats.mp4',
+         '/assets/videos/006-waving-cats.mp4',
+         '/assets/videos/007-tapping-cats.mp4',
+         '/assets/videos/008-intellectual-cats.mp4',
+         '/assets/videos/009-quak-cats.mp4',
+         '/assets/videos/010-surprise-cats.mp4',
+         '/assets/videos/011-ninja-cats.mp4',
+         '/assets/videos/012-munching-hamster.mp4',
+         '/assets/videos/012-running-hamster.mp4',
+         '/assets/videos/013-eating-treekangaroo.mp4',
+         '/assets/videos/014-sweet-hamster.mp4',
+         '/assets/videos/015-eatingContest-guineapig.mp4',
+         '/assets/videos/016-eatingContest-hare.mp4',
+         '/assets/videos/017-eating-hamster.mp4',
+         '/assets/videos/018-falling-hamster.mp4',
+         '/assets/videos/019-snuggly-otter.mp4',
+         '/assets/videos/020-sleepy-seacow.mp4',
+         '/assets/videos/021-sa-hi-cat.mp4'
+      ];
+
+      const selectIndex = Math.floor(Math.random() * videos.length);
+
+      return videos[selectIndex];
    });
 
    function newRound() {
@@ -57,7 +68,7 @@
    @import "bootstrap/scss/maps";
    @import "bootstrap/scss/mixins";
 
-   img {
+   img, video {
       @include media-breakpoint-up(lg) {
          max-height: 600px;
       }
