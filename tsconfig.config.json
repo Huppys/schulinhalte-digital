@@ -3,6 +3,11 @@
   "include": ["vite.config.*", "vitest.config.*", "cypress.config.*"],
   "compilerOptions": {
     "composite": true,
-    "types": ["node"]
+    "types": ["node"],
+    "alwaysStrict": true,
+    "inlineSourceMap": true,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "noImplicitThis": true
   }
 }

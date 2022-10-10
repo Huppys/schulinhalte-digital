@@ -14,19 +14,19 @@ const router: Router = createRouter({
     {
       path: '/mathe',
       name: 'Mathematik',
-      component: MatheIntro,
+      component: MatheIntro
     },
     {
       path: '/mathe/1x1',
-      component: Mathe1x1,
-      name: 'Das kleine 1x1'
+      name: 'Das kleine 1x1',
+      component: Mathe1x1
     },
     {
       path: '/mathe/result',
       name: 'Dein Ergebnis',
       component: MatheResult
     }
-  ],
+  ]
 });
 
 export default router;

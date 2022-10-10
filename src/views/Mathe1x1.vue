@@ -6,10 +6,10 @@
       <div class="d-flex flex-column justify-content-center">
          <h2 class="text-center flex-row">Trage das richtige Ergebnis ein.</h2>
          <div class="d-flex flex-row mt-5 mb-2 justify-content-center">
-            <label class="col-1 me-2 col-form-label col-form-label-lg" for="result" style="text-align: right;">{{ secondFactor }} x {{ firstFactor }} = </label>
+            <label v-if="currentFactor" class="col-1 me-2 col-form-label col-form-label-lg" for="result" style="text-align: right;">{{ secondFactor }} x {{ firstFactor }} = </label>
             <div class="d-flex flex-column col-3">
                <input class="form-control form-control-lg" ref="resultInput" type="text" name="result" v-model="result" @keydown.enter="submitResult()" required autocomplete="off" pattern="[0-9]{1,3}" spellcheck="false" autofocus />
-               <span v-if="!isCorrectResult" class="text-danger mt-2 ps-2">Das ist leider falsch.<br>Du hast dich bestimmt nur vertippt.</span>
+               <span v-if="isRetry" class="text-danger mt-2 ps-2">Das ist leider falsch.<br>Du hast noch einen Versuch.</span>
             </div>
          </div>
       </div>
@@ -18,57 +18,80 @@
 
 <script lang="ts" setup>
 
-   const resultInput: Ref<HTMLInputElement | null> = ref(null)
+   // Components
+   import { useMultiplyCalculationStore } from '@/stores/multiplyCalculation';
+   import { computed, ComputedRef, onMounted, reactive, Ref, ref } from 'vue';
+   import { useRouter } from 'vue-router';
+   import { Mathe1x1Helper } from '@/components/Mathe/1x1';
+
 
    onMounted(() => {
       resultInput.value?.focus();
    });
 
-   // Components
-   import { createRange, getRandomFactor, multiply, shuffleNumbers } from '@/components/Mathe/1x1';
-   import { computed, onMounted, reactive, Ref, ref } from 'vue';
-   import { useRouter } from 'vue-router';
-
-   const result: Ref = ref();
    const router = useRouter();
+   const multiplyStore = useMultiplyCalculationStore();
+
+   const mathe1x1Helper = new Mathe1x1Helper();
+   const maxTodos = 10;
+
+   const resultInput: Ref<HTMLInputElement | null> = ref(null)
+   const result: Ref = ref();
+   const isRetry: Ref<boolean> = ref(false);
 
    const index: Ref<number> = ref(0);
-   const firstFactor = getRandomFactor();
-   const secondFactors = shuffleNumbers(createRange(1, 10));
-   const secondFactor = computed(() => secondFactors[index.value]);
-   const progressWidth = computed(() => `width: ${ secondFactors.length * (index.value) }%;`);
+   const factors: Array<[number, number]> = mathe1x1Helper.getFactors(maxTodos);
+   const currentFactor: ComputedRef<[number, number]> = computed(() => factors[index.value]);
+   const firstFactor: ComputedRef<number> = computed(() => {
+      return currentFactor.value[0];
+   });
+   const secondFactor: ComputedRef<number> = computed(() => {
+      return currentFactor.value[1];
+   });
 
-   const isCorrectResult = ref(true);
+   const progressWidth = computed(() => `width: ${ maxTodos * (index.value) }%;`);
 
+
+   function resetRetry() {
+      isRetry.value = false;
+   }
+
+   function resetResultInputField() {
+      result.value = null;
+   }
+
+   function getNextCalculation() {
+      index.value++;
+   }
 
    function submitResult() {
+
+      if ( !result.value ) {
+         return;
+      }
 
       if ( !result.value.match(/\d+/) ) {
          result.value = null;
          return;
       }
 
-      if ( !result.value ) {
-         return;
-      }
-
-      if ( multiply(firstFactor, secondFactor.value) === parseInt(result.value) ) {
+      if ( mathe1x1Helper.multiply(firstFactor.value, secondFactor.value) === parseInt(result.value) ) {
          state.score = state.score + 1;
-         isCorrectResult.value = true;
-
+         resetRetry();
+         getNextCalculation();
+      } else if (!isRetry.value) {
+         isRetry.value = true;
       } else {
-         isCorrectResult.value = false;
-         return;
+         multiplyStore.addTodo(currentFactor.value);
+         resetRetry();
+         getNextCalculation();
       }
 
-      index.value++;
+      resetResultInputField();
 
-      if ( secondFactors.length <= index.value ) {
-         console.log('Change route');
+      if ( index.value >= maxTodos ) {
          router.push({ name: 'Dein Ergebnis'});
       }
-
-      result.value = null;
    }
 
    const state = reactive({
