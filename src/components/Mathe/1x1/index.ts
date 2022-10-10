@@ -9,10 +9,6 @@ export class Mathe1x1Helper {
       this.multiplyStore = useMultiplyCalculationStore();
    }
 
-   private getRandomFactor(max: number = 9): number {
-      return Math.ceil(Math.random() * max);
-   }
-
    public getFactors(count: number): Array<[number, number]> {
 
       if ( this.multiplyStore.hasTodos(count) ) {
@@ -22,13 +18,16 @@ export class Mathe1x1Helper {
       const firstFactor = this.getRandomFactor();
       const secondFactors = this.shuffleNumbers(this.createRange(1, 10));
 
-      const factors = new Array<[number, number]>();
+      return secondFactors.map((value) => [firstFactor, value]);
+   }
 
-      secondFactors.forEach((value) => {
-         factors.push([firstFactor, value]);
-      });
+   public multiply(a: number, b: number): number {
+      return a * b;
+   }
 
-      return factors;
+   private getRandomFactor(min: number = 2, max: number = 9): number {
+      const result = Math.ceil(Math.random() * max);
+      return result < min ? this.getRandomFactor() : result;
    }
 
    private shuffleNumbers(array: number[]) {
@@ -49,10 +48,6 @@ export class Mathe1x1Helper {
          range.push(i);
       }
       return range;
-   }
-
-   public multiply(a: number, b: number): number {
-      return a * b;
    }
 }
 

@@ -1,26 +1,54 @@
-import { describe, test, expect } from 'vitest';
-import { createRange, getRandomFactor, shuffleNumbers } from '../Mathe/1x1';
+import { vitest } from 'vitest';
+import { createTestingPinia } from '@pinia/testing';
+import { describe, test, expect, beforeAll } from 'vitest';
+import { Mathe1x1Helper } from '../Mathe/1x1';
 
 
 describe('Mathe 1x1', () => {
-   test('should return random value between 1 and 10 inclusive', () => {
-      const maxRuns = 1000;
+   let matheHelper: Mathe1x1Helper;
+
+   beforeAll(() => {
+      createTestingPinia({ createSpy: vitest.fn });
+      matheHelper = new Mathe1x1Helper();
+   });
+
+   test('should return random value between 2 and 9 inclusive', () => {
+      const maxRuns = 100;
 
       for ( let i = 0; i < maxRuns; i++ ) {
-         const randomFactor = getRandomFactor();
-         expect(randomFactor).toBeGreaterThanOrEqual(1);
-         expect(randomFactor).toBeLessThanOrEqual(10);
+         const factors = matheHelper.getFactors(10);
+
+         factors.forEach((pair: [number, number]) => {
+            expect(pair[0]).toBeGreaterThanOrEqual(2);
+            expect(pair[0]).toBeLessThanOrEqual(9);
+         });
       }
    });
 
-   test('should return array with numbers in range', () => {
-      const range = createRange(1, 3);
-      expect(range).toEqual([1, 2, 3]);
+   test('should multiply both factors and return product', () => {
+      const factor1 = 2;
+      const factor2 = 3;
+      expect(matheHelper.multiply(factor1, factor2)).toEqual(6);
    });
 
-   test('should return shuffled range of numbers', () => {
-      const range = createRange(1, 3);
-      const shuffledRange = shuffleNumbers(range);
-      expect(shuffledRange.sort()).toEqual(range);
+   test.skip('should log distribution of factors', () => {
+      const maxRuns = 100;
+
+      let mainFactorDistribution: Map<number, number> = new Map<number, number>();
+
+      for ( let i = 0; i < maxRuns; i++ ) {
+         const factors = matheHelper.getFactors(10);
+
+         const mapKey: number = factors[0][0];
+         if (!mainFactorDistribution.has(mapKey)) {
+            mainFactorDistribution.set(mapKey, 1);
+         } else {
+            const value: number | undefined = mainFactorDistribution.get(mapKey);
+            if (value !== undefined) {
+               mainFactorDistribution.set(mapKey, value + 1);
+            }
+         }
+      }
+      console.log(mainFactorDistribution);
    });
 });
