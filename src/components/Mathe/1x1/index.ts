@@ -11,14 +11,12 @@ export class Mathe1x1Helper {
 
    public getFactors(count: number): Array<[number, number]> {
 
-      if ( this.multiplyStore.hasTodos(count) ) {
-         return this.multiplyStore.getNextTodos(count);
-      }
+      const nextTodos = this.multiplyStore.getNextTodos(count);
 
       const firstFactor = this.getRandomFactor();
       const secondFactors = this.shuffleNumbers(this.createRange(1, 10));
 
-      return secondFactors.map((value) => [firstFactor, value]);
+      return nextTodos.concat(secondFactors.splice(0, count - nextTodos.length).map((value) => [firstFactor, value]));
    }
 
    public multiply(a: number, b: number): number {

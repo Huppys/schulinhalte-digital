@@ -90,6 +90,7 @@
       resetResultInputField();
 
       if ( index.value >= maxTodos ) {
+         multiplyStore.saveTodosToLocalStorage();
          router.push({ name: 'Dein Ergebnis'});
       }
    }

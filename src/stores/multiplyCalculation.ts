@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import type { ComputedRef } from 'vue';
 
 interface LocalStorageMathe {
-   'multiply': {
+   multiply: {
       '1x1': {
          todos: Array<[number, number]>
       }
@@ -16,6 +16,7 @@ export const useMultiplyCalculationStore = defineStore('multiplyCalculation', ()
    let localStorageMathe: string | null = localStorage.getItem(localStorageMatheKey);
 
    const parseLocalStorage: ComputedRef<LocalStorageMathe> = computed(() => {
+
       if ( !localStorageMathe ) {
          localStorageMathe = JSON.stringify({
             multiply: {
@@ -36,7 +37,10 @@ export const useMultiplyCalculationStore = defineStore('multiplyCalculation', ()
 
    function addTodo(factors: [number, number]) {
       todos.value?.push(factors);
+      saveTodosToLocalStorage();
+   }
 
+   function saveTodosToLocalStorage(): void {
       const testObject = {...parseLocalStorage.value}
       testObject.multiply['1x1'].todos = todos.value;
       localStorage.setItem(localStorageMatheKey, JSON.stringify(testObject));
@@ -51,9 +55,9 @@ export const useMultiplyCalculationStore = defineStore('multiplyCalculation', ()
    }
 
    return {
-      todos,
       addTodo,
       hasTodos,
+      saveTodosToLocalStorage,
       getNextTodos
    };
 });
