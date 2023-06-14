@@ -22,7 +22,7 @@
    import { useMultiplyCalculationStore } from '@/stores/multiplyCalculation';
    import { computed, ComputedRef, onMounted, reactive, Ref, ref } from 'vue';
    import { useRouter } from 'vue-router';
-   import { Mathe1x1Helper } from '@/components/Mathe/1x1';
+   import { Mathe1x1Helper } from '@/components/math/Mathe1x1Helper';
 
 
    onMounted(() => {
@@ -40,7 +40,7 @@
    const isRetry: Ref<boolean> = ref(false);
 
    const index: Ref<number> = ref(0);
-   const factors: Array<[number, number]> = mathe1x1Helper.getFactors(maxTodos);
+   const factors: Array<[number, number]> = mathe1x1Helper.getShuffledFactors(maxTodos);
    const currentFactor: ComputedRef<[number, number]> = computed(() => factors[index.value]);
    const firstFactor: ComputedRef<number> = computed(() => {
       return currentFactor.value[0];

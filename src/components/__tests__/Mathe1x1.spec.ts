@@ -1,7 +1,7 @@
 import { vitest } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
 import { describe, test, expect, beforeAll } from 'vitest';
-import { Mathe1x1Helper } from '../Mathe/1x1';
+import { Mathe1x1Helper } from '../math/Mathe1x1Helper';
 
 
 describe('Mathe 1x1', () => {
@@ -16,7 +16,7 @@ describe('Mathe 1x1', () => {
       const maxRuns = 100;
 
       for ( let i = 0; i < maxRuns; i++ ) {
-         const factors = matheHelper.getFactors(10);
+         const factors = matheHelper.getShuffledFactors(10);
 
          factors.forEach((pair: [number, number]) => {
             expect(pair[0]).toBeGreaterThanOrEqual(2);
@@ -37,7 +37,7 @@ describe('Mathe 1x1', () => {
       let mainFactorDistribution: Map<number, number> = new Map<number, number>();
 
       for ( let i = 0; i < maxRuns; i++ ) {
-         const factors = matheHelper.getFactors(10);
+         const factors = matheHelper.getShuffledFactors(10);
 
          const mapKey: number = factors[0][0];
          if (!mainFactorDistribution.has(mapKey)) {

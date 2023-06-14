@@ -9,7 +9,11 @@ export class Mathe1x1Helper {
       this.multiplyStore = useMultiplyCalculationStore();
    }
 
-   public getFactors(count: number): Array<[number, number]> {
+   /**
+    * Return a shuffled list of factors
+    * @param count
+    */
+   public getShuffledFactors(count: number): Array<[number, number]> {
 
       const nextTodos = this.multiplyStore.getNextTodos(count);
 
