@@ -1,4 +1,4 @@
-import { useMultiplyCalculationStore } from '@/stores/multiplyCalculation';
+import { useMultiplyCalculationStore } from "@/stores/multiplyCalculation";
 
 
 export class Mathe1x1Helper {
@@ -27,6 +27,10 @@ export class Mathe1x1Helper {
       return a * b;
    }
 
+   public divide(a: number, b: number): number {
+      return a / b;
+   }
+
    private getRandomFactor(min: number = 2, max: number = 9): number {
       const result = Math.ceil(Math.random() * max);
       return result < min ? this.getRandomFactor() : result;
@@ -50,6 +54,12 @@ export class Mathe1x1Helper {
          range.push(i);
       }
       return range;
+   }
+
+   getShuffledDividends(maxTodos: number): Array<[number, number]> {
+      return this.getShuffledFactors(maxTodos).map(item => {
+         return [item[0] * item[1], item[0]]
+      });
    }
 }
 

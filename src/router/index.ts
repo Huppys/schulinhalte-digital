@@ -6,6 +6,7 @@ import Result from '../views/result/TheResult.vue';
 import DeutschLesen from "@/views/reading/TheWordImagesQuiz.vue";
 import TheIndex from "@/views/index/TheIndex.vue";
 import DeutschIntro from "@/views/deutsch/TheDeutschIntro.vue";
+import TheDivideQuiz from "@/views/mathe/TheDivideQuiz.vue";
 
 const router: Router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,6 +25,11 @@ const router: Router = createRouter({
       path: '/mathe/1x1',
       name: 'Das kleine 1x1',
       component: Mathe1x1
+    },
+    {
+      path: '/mathe/divide',
+      name: 'Zahlen bis 100 teilen',
+      component: TheDivideQuiz
     },
     {
       path: '/result',

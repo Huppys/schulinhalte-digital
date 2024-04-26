@@ -1,6 +1,9 @@
 <template>
    <div class="d-flex justify-content-center flex-column">
-      <h3 class="text-center mb-4">Super! Du hast alle richtig gelöst!</h3>
+      <h3 class="text-center mb-4">
+        {{ scoreLabel }}<br>
+      </h3>
+     <h4 class="text-center mb-4">Du hast {{ scoreStore.score }} von 10 Aufgaben richtig gelöst!</h4>
       <img v-if="Math.random() > 0.9" crossorigin="anonymous" class="w-50 m-auto mb-4" :src="randomImage" alt="More cats!">
       <video v-else :src="randomVideo" class="w-50 m-auto mb-4" loop autoplay></video>
       <div class="d-flex justify-content-center">
@@ -11,8 +14,12 @@
 <script lang="ts" setup>
    import { computed } from 'vue';
    import { useRouter } from 'vue-router';
+   import { useRoutingStore } from "@/stores/routingStore";
+   import { useScoreStore } from "@/stores/scoreStore";
 
    const router = useRouter();
+   const routingStore = useRoutingStore();
+   const scoreStore = useScoreStore();
 
    const randomImage = computed(() => {
 
@@ -23,6 +30,33 @@
       const selectIndex = Math.floor(Math.random() * images.length);
 
       return images[selectIndex];
+   });
+
+   const scoreLabel = computed(() =>{
+     switch (scoreStore.score) {
+       case 10:
+         if (!scoreStore.retryUsed) {
+           return 'Der blanke Wahnnsinn! Auf Anhieb alle richtig!'
+         }
+         return 'Wow! Du hast alle Fragen richtig beantwortet!'
+       case 9:
+         return 'Das war richtig stark!'
+       case 8:
+         return 'Klasse!'
+       case 7:
+         return 'Voll gut!'
+       case 6:
+         return 'Geschafft!'
+       case 5:
+         return 'Möchtest du noch eine Runde spielen?'
+       case 4:
+         return 'Du hast nicht alle Aufgaben richtig.'
+       case 3:
+       case 2:
+       case 1:
+       default:
+         return 'Wiederhole die Aufgaben nochmal zusammen mit jemanden.'
+     }
    });
 
    const randomVideo = computed(() => {
@@ -59,7 +93,8 @@
    });
 
    function newRound() {
-      router.push({ path: '/mathe/1x1' });
+     scoreStore.reset();
+     router.push({ path: routingStore.currentQuizRoute });
    }
 </script>
 <style lang="scss">
