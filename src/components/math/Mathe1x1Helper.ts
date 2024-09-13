@@ -12,12 +12,18 @@ export class Mathe1x1Helper {
    /**
     * Return a shuffled list of factors
     * @param count
+    * @param factor
     */
-   public getShuffledFactors(count: number): Array<[number, number]> {
+   public getShuffledFactors(count: number, factor: number | undefined): Array<[number, number]> {
 
       const nextTodos = this.multiplyStore.getNextTodos(count);
 
-      const firstFactor = this.getRandomFactor();
+      let firstFactor = this.getRandomFactor();
+
+      if (factor) {
+         firstFactor = factor;
+      }
+
       const secondFactors = this.shuffleNumbers(this.createRange(1, 10));
 
       return nextTodos.concat(secondFactors.splice(0, count - nextTodos.length).map((value) => [firstFactor, value]));
