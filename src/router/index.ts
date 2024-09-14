@@ -28,10 +28,17 @@ const router: Router = createRouter({
       component: Mathe1x1Overview
     },
     {
+      // TODO: Match only numbers
       path: "/mathe/1x1/:lesson",
       // TODO: name should adjust to dynamic parameter
       name: "Die Reihen",
-      component: The1x1Quiz
+      component: The1x1Quiz,
+      meta: {
+        backlink: {
+          target: "/mathe/1x1/overview",
+          label: "Zurück zur Auswahl"
+        }
+      }
     },
     {
       path: "/mathe/divide",

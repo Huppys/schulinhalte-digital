@@ -104,9 +104,10 @@
    @import "bootstrap/scss/mixins";
 
    img, video {
+      object-fit: contain;
+
       @include media-breakpoint-up(lg) {
          max-height: 600px;
       }
-      object-fit: contain;
    }
 </style>

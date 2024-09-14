@@ -1,10 +1,10 @@
 <template>
    <div class="d-flex justify-content-center">
       <ul>Ich will
-        <li>
+        <li class="mt-2">
          <router-link to="/mathe/1x1/overview">das kleine 1x1 üben</router-link>.
         </li>
-        <li>
+        <li class="mt-2">
          <router-link to="/mathe/divide">das Teilen mit Zahlen bis 100 üben</router-link>.
         </li>
       </ul>

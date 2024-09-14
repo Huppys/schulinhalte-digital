@@ -1,8 +1,6 @@
 <template>
-  <router-link to="/mathe/1x1/overview">Zurück zur Auswahl</router-link>
   <MathQuiz
     :max-todos="maxTodos" :math-tasks="mathTasks" :arithmetic-symbol="arithmeticSymbol" :validation-method="mathe1x1Helper.multiply" />
-
 </template>
 
 <script lang="ts" setup>
