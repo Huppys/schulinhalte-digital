@@ -4,12 +4,11 @@ import { computed, ref } from "vue";
 const rawScoreStore = {
   score: 0,
   failures: 0,
-  retryUsed: false
+  retryUsed: false,
 };
 
 export const useScoreStore = defineStore("scoreStore", () => {
-
-  const state =  ref(Object.assign({}, rawScoreStore));
+  const state = ref(Object.assign({}, rawScoreStore));
 
   const score = computed(() => state.value.score);
 
@@ -29,9 +28,9 @@ export const useScoreStore = defineStore("scoreStore", () => {
     state.value.retryUsed = true;
   }
 
-  const retryUsed = computed(() => state.value.retryUsed)
+  const retryUsed = computed(() => state.value.retryUsed);
 
-  const failures = computed(() => state.value.failures)
+  const failures = computed(() => state.value.failures);
 
   return {
     plusOne,
@@ -40,7 +39,6 @@ export const useScoreStore = defineStore("scoreStore", () => {
     failures,
     reset,
     retryUsed,
-    retry
+    retry,
   };
-
 });

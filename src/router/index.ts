@@ -15,17 +15,17 @@ const router: Router = createRouter({
     {
       path: "/",
       name: "Schule digital",
-      component: TheIndex
+      component: TheIndex,
     },
     {
       path: "/mathe",
       name: "Mathematik",
-      component: MatheIntro
+      component: MatheIntro,
     },
     {
       path: "/mathe/1x1/overview",
       name: "Das kleine 1x1",
-      component: Mathe1x1Overview
+      component: Mathe1x1Overview,
     },
     {
       // TODO: Match only numbers
@@ -36,31 +36,31 @@ const router: Router = createRouter({
       meta: {
         backlink: {
           target: "/mathe/1x1/overview",
-          label: "Zurück zur Auswahl"
-        }
-      }
+          label: "Zurück zur Auswahl",
+        },
+      },
     },
     {
       path: "/mathe/divide",
       name: "Zahlen bis 100 teilen",
-      component: TheDivideQuiz
+      component: TheDivideQuiz,
     },
     {
       path: "/result",
       name: "Dein Ergebnis",
-      component: Result
+      component: Result,
     },
     {
       path: "/deutsch",
       name: "Deutsch",
-      component: DeutschIntro
+      component: DeutschIntro,
     },
     {
       path: "/deutsch/lesen",
       name: "Lesen",
-      component: DeutschLesen
-    }
-  ]
+      component: DeutschLesen,
+    },
+  ],
 });
 
 export default router;

@@ -1,6 +1,8 @@
 <template>
   <div class="d-flex justify-content-center flex-column mt-4">
-    <router-link v-if="backLink" :to="backLink.target" class="flex-inline">{{ backLink.label }}</router-link>
+    <router-link v-if="backLink" :to="backLink.target" class="flex-inline">{{
+      backLink.label
+    }}</router-link>
     <header class="my-3">
       <h1 class="text-center">{{ title }}</h1>
     </header>
