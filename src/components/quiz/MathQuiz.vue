@@ -4,33 +4,40 @@
 
     <div class="d-flex flex-column justify-content-center">
       <h2 class="text-center flex-row">Trage das richtige Ergebnis ein.</h2>
+
       <div class="d-flex flex-row mt-5 mb-2 justify-content-center">
         <label
           v-if="currentMathTask"
-          class="col-3 col-lg-2 me-2 col-form-label col-form-label-lg"
+          class="col-4 me-2 col-form-label col-form-label-lg"
           for="result"
           style="text-align: right"
-          >{{ firstNumber }} {{ arithmeticSymbol }} {{ secondNumber }} =
+        >
+          {{ secondNumber }} {{ arithmeticSymbol }} {{ firstNumber }} =
         </label>
-        <div class="d-flex flex-column col-3 col-lg-4">
+
+        <div class="d-flex flex-column col-6">
           <input
             class="form-control form-control-lg w-50"
             ref="resultInput"
-            type="text"
+            type="number"
             name="result"
             v-model="result"
             @keydown.enter="submitResult()"
             required
             autocomplete="off"
-            pattern="[0-9]{1,3}"
+            max="1000"
+            min="0"
+            inputmode="decimal"
             spellcheck="false"
             autofocus
           />
+
           <span v-if="isRetry" class="text-danger mt-2 ps-2"
             >Das ist leider falsch.<br />Du hast noch einen Versuch.</span
           >
         </div>
       </div>
+
       <div
         v-if="showFailuresWarning"
         class="d-flex flex-column justify-content-center align-items-center"
@@ -40,6 +47,7 @@
             >Tipp nicht irgendwas ein. Du musst schon die Aufgabe lösen!</strong
           >
         </h5>
+
         <video
           class="w-75"
           autoplay
@@ -86,12 +94,15 @@ function resetResultInputField() {
 function getNextCalculation() {
   index.value++;
 }
+
 const scoreStore = useScoreStore();
 
 const isRetry: Ref<boolean> = ref(false);
+
 function resetRetry() {
   isRetry.value = false;
 }
+
 const router = useRouter();
 const routingStore = useRoutingStore();
 const resultInput: Ref<HTMLInputElement | null> = ref(null);
@@ -110,10 +121,10 @@ function submitResult() {
     return;
   }
 
-  if (!result.value.match(/\d+/)) {
-    result.value = null;
-    return;
-  }
+  // if (!result.value.match(/\d+/)) {
+  //   result.value = null;
+  //   return;
+  // }
 
   const isCorrect =
     props.validationMethod(firstNumber.value, secondNumber.value) ===
@@ -146,3 +157,17 @@ function submitResult() {
   }
 }
 </script>
+
+<style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+</style>
