@@ -27,7 +27,7 @@
             autocomplete="off"
             max="1000"
             min="0"
-            inputmode="decimal"
+            inputmode="numeric"
             spellcheck="false"
             autofocus
           />
@@ -37,6 +37,13 @@
           >
         </div>
       </div>
+      <button
+        class="align-self-center col-5 mt-4 py-4"
+        type="submit"
+        @click="submitResult"
+      >
+        OK
+      </button>
 
       <div
         v-if="showFailuresWarning"
@@ -155,6 +162,8 @@ function submitResult() {
     // divisionStore.saveTodosToLocalStorage();
     router.push({ name: "Dein Ergebnis" });
   }
+
+  resultInput.value.focus();
 }
 </script>
 
